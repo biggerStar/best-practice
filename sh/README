@@ -1,0 +1,64 @@
+declare -i number=$RANDOM*10/32768;echo $number #打印（0，9）之间的随机数
+declare -a # 定义成数组
+declare -x # 将变量至成环境变量
+declare -r # 将变量设置为readonly
+echo $$ # $本身也是一个变量，表示本线程的PID（process id）
+echo $? # ?也是一个变量，上一个命令的回传码,正常执行为0，错误为非0
+set # 查看所有变量
+echo ${variable#*:} # 删除变量中第一个：之前的内容,一个#是最短匹配，两个#就是最长匹配
+cat something > log > 2>&1; # 1 standard output, 2 standard error output.将两个输出合并起来，重定向到log文件
+cut -d '分隔符' -f 第几个数
+cut -c 1-10 # 取得第一个到第十个数
+export # 让变量在子进程中有效，自定义变量转为环境变量
+env # 查看环境变量
+set #查看环境变量和自定义变量
+read named # 键盘输入的数据存入变量named中
+alias md='mkdir' # 别名
+cat readme|sort # sort 按首字母排序
+cat /etc/passwd |sort -t ":" -k 3 #以顿号分割，去第三个排序
+uniq #将重复的数据仅列出一个显示
+last | tr -d "reboot" # tr -d删除字符；tr 'sfx' 'sdd' 将sfx替换为sdd； 也可用正则 '[a-z]' '[A-Z]'
+col -x # 将tab替换为空格
+cat -A #显示出特殊字符
+join -t ':' -1 4 /etc/passwd -2 3 /etc/group # 两个文件，每行都以：分割，比较第一个文件的第四个字段和第二个文件的第三个字段，如果相等，则将两行写在一起,-i 忽略大小写
+paste /etc/passwd /etc/group 将两文件同行粘贴在一起，tab分割
+split -b 300k ./tmp tmpxx # 将tmp分割为多个文件，每个文件300k，命名为tmpxxaa,tmpxxab,tmpxxac....
+split -l 10 # 同上，以10行为单位
+
+#正则
+grep -A2 -B3 'ex' # 关键词ex的后（after）两行和前（before）3行也显示出来
+grep -n # 显示行号
+grep -n "the" file.txt # 显示file.txt中的the
+grep -vm "the" file.txt # 反向选择
+grep -in 'the' file.ext #忽略大小写
+grep -n 't[ae]st' file.txt # []中不论有几个字符，都只代表一个；匹配tast或者test
+grep -n '[^g]oo' file.txt # []中反向选择，包含oo但是oo之前不是g的
+grep -n '[^a-z]oo' file.txt # oo之前没有小写字母
+grep -n '^the' file # the在行首出现
+grep -n '\.$' file # 以小数点结尾的行
+grep -n '^$' file #输出空白行
+
+# sed
+nl /etc/passwd |sed "2,5d" # 删除2-5行
+nl /etc/passwd|se "2a drink tea" # 在第二行后面添加drink tea
+nl /etc/passwd | sed "2a drink tea\
+       drink beer"; # 添加两行
+nl /etc/passwd |sed "2,5 c aaa" #将2-5行替换为aaa
+nl /etc/passwd |sed "7,10p" # 仅列出7-10行
+sed 's/被替换的字符/新的字符/g'
+sbin/ifconfig en0|grep 'inet '|sed 's/^.*broadcast //g' #删除ip之前的字符
+sed -i 's/ //g' regular.file #直接修改file中的内容
+
+# 正则扩张 使用egrep
+egrep -n 't(e|a)st' file # （）代表分组，分组查询
+echo 'Axyzxyzxyz' |egrep 'A(xyz)+' #多个重复组
+
+#awk
+last -n 8|awk '{print$1"\t"$2}' # 默认为空格分割
+last -n 8|awk ' BEGIN {print FS} {print$1 NR"\t"$2}' #FS 目前的分割字符，NR 目前处理的第几行，NF每一行拥有的总字段数
+awk -F #分隔符
+
+#diff
+diff [-bBi] fromfile tofile #b 忽略一行中的空白行，B忽略空白行的区别，i忽略大小写的区别
+4d3 <  #左边第四行删除了，基准是右边第三行
+6c5 <  # 左边第6行被替换了，成为了右边的第五行
