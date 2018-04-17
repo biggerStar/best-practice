@@ -125,3 +125,8 @@ Object.prototype.isPrototypeOf(o) //true
 var ff = new f();
 f.prototype.isPrototypeOf(ff) //true. 通过new创建的对象ff，其原型对象是f.prototype
 
+//对象序列化：JSON
+JSON.stringify()
+JSON.parse()
+
+
