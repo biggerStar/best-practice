@@ -52,8 +52,7 @@ for(var index in array){
         continue;
 }
 
-forEach();按照索引的顺序按个传递给定于的一个函数，函数式风格
-var data = [1,2,3,4,5]
+forEach();按照索引的顺序按个传递给定于的一个函数，函数式风格 var data = [1,2,3,4,5]
 data.forEach(function(x){console.log(x)});//1,2,3,4,5
 
 //join
@@ -141,4 +140,22 @@ function findall(a,x){
     }
     return result;
 }
+
+//Array.isArray()
+Array.isArray([]) //true
+Array.isArray({}) // false
+
+//类数组对象
+var a = {"0":"a","1":"b","2":"c",length;0}
+a.join()//erro,a是对象，没有继承Array方法
+Array.prototype.join.call(a)//'a,b,c'
+Array.prototype.map.call(a,function(x){return x.toUpperCase();});//["A","B","C"]
+
+//可索引的字符串
+var s = test;
+s.charAt(0)// 't'
+s[1] // 'e'
+//还可以使用类数组方法
+Array.prototype.join.call(s," ") // "t e s t"
+//注意，字符串是不可改变的，push,sort,reverse,splice等数组方法无法应用于数组
 
