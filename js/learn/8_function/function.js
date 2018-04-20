@@ -62,5 +62,54 @@ var o = {
     }
 }
 
+//构造函数
+//没有参数传入的构造函数可以省略括号，但是函数不行
+var o = new Object;
+var o = new Object();
 
+//构造函数继承自构造函数prototype属性。
+
+//实参（调用时传入）和形参（声明时传入）
+//js实参和形参的个数可以不一致，因此需要做一个检查
+a = a || []; //a是形参的时候，做类型检查
+
+//arguments数组可以获得实参，arguments[0]得到第一个实参，arguments[1]得到第二个实参
+//本质上 arguments不是数组，是一个参数对象
+//
+
+//js对函数可以当成值来使用，赋值给变量或者传给对象作为参数。
+function square(x){} //定义
+var s = square; // s 和 square指代同一个函数
+s(4)// 调用
+
+var o = {square:function(x){return x*x;}} //对象直接量
+var y = o.square(10); //函数调用
+
+//函数作为数值使用
+function add(x,y){return x + y}
+function operate(operator, args1, args2){
+    return operator(args1,args2)
+}
+
+//使用函数直接量
+var operators = {
+    add:function(x,y){return x + y}
+    subtract:function(x,y){return x - y}
+};
+function operate2(operator, args1, args2){
+    if(typeof operators[operator] == 'function')
+        return operators[operator](args1, args2);
+    else throw "unknown operator";
+}
+
+//js中的变量，如果不在函数中，就是全局的
+//使用匿名函数可以避免污染全局空间
+（function(){}());//定义结束立即调用
+
+//函数的属性
+//js的函数是一种特殊的对象，也可以有属性。利用属性可以给该函数保存一个“静态”的变量,用这种办法可以避免将变量写入global全局空间。
+uniqueInteger.counter = 0;
+function uniqueInterger(){
+    return uniqueInteger.counter++;
+}
 
