@@ -113,3 +113,29 @@ function uniqueInterger(){
     return uniqueInteger.counter++;
 }
 
+//闭包
+//函数变量可以通过作用域(第三章)相互关联起来，函数体内部的变量都可以保存在函数作用域内，这种特性称为闭包。
+var scope = "global"
+function checkscope(){
+    var scope = "local"
+    function f(){return scope;}
+    return f();
+}
+checkscope();//=> "local"
+//改动
+function checkscope(){
+    var scope= "local"
+    function f(){ return scope;}
+    return f;
+}
+checkscope()();//=> "local"
+//js的词法作用域规则，并不是局部变量返回之后就失效了，而是有作用域链的作用。作用域链是一个对象列表（而不是栈），每次调用函数，都会为之创建一个新的对象来保存局部变量（见下面的counter例子），把这个对象添加到作用域链中。当函数返回的时候，将对象从作用域中删除。但是如果这个函数定义了嵌套函数(例如上面的f())，并将它作为返回值返回，或者存储在某处的属性里，这是就会有一个外部引用指向这个嵌套的函数，他就不会被回收。
+//
+//上面uniqueInteger函数使用函数属性保存变量的做法有安全问题，恶意代码可能将非整数传给它。
+//我们用闭包来改造这个函数：
+var uniqueInteger = (function(){
+    var counter = 0;
+    return function() return counter++;};
+}());
+
+
