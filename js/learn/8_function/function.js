@@ -138,4 +138,88 @@ var uniqueInteger = (function(){
     return function() return counter++;};
 }());
 
+//闭包：数据共享和隔离
+function counter(){
+    var n = 0;
+    return {
+        count: function(){return n++;},
+        reset: function(){ n = 0;}
+    };
+}
+var c = counter()
+var d = counter() // 创建两个counter对象
+c.count() //=> 0
+d.count() //=> 0; 他们互不干扰
+c.reset() // reset 和 count 共享局部变量n
+
+// 创建counter对象的时候，会创建一个新的作用域链，因此c和d的count方法互不干扰，
+// 使用闭包替代普通对象属性
+function counter(n){
+    return {
+        get count(){ return n++;}
+        set count(m){ n = m;}
+    };
+}
+//使用闭包技术共享私有变量，并没有声明局部变量。
+
+//function构造函数, new Function(){}
+var scope = "global"
+function constructFunction(){
+    var scope = "local"
+    return new Function(){"return scope"}
+}
+
+constructFunction()(); //=> global. Function构造函数代码的编译总会在顶层函数执行，因此很少用到这种方法
+
+// 函数式
+// 求方差
+var data = [1,2,3,4,5]
+var mean = data.reduce(function(x,y) {return x+y})/data.length;
+var stddev = Math.sqrt(data.map(function(x){return (x-mean) * (x -mean)}).reduce(function(x , y){return x + y}))
+
+//高阶函数：接受一个或多个函数作为参数，并返回一个新的函数
+function not(f){
+    return function(){
+        var result = f.apply(this, arguments);
+        return !result; //调用f，返回取反的结果
+    }
+}
+
+var even = function(x){ // 判断x是否为偶数
+    return x % 2 === 0
+}
+
+var not = not(even); //一个新的函数，判断是否为基数
+[1,3,4,5].every(not);
+
+// 不完全调用
+//不完全调用可以概括为：这个函数额可以接受一些参数，这些参数中有一些参数可以被绑定成其他函数，然后返回一个新的函数，这个新的函数接收剩下的为绑定的参数
+function partial(fn /*, args...*/) {
+    // A reference to the Array#slice method.
+    var slice = Array.prototype.slice;
+    // Convert arguments object to an array, removing the first argument.because the fist argument is function
+    var args = slice.call(arguments, 1);
+
+    return function() {
+      // Invoke the originally-specified function, passing in all originally-
+      // specified arguments, followed by any just-specified arguments.
+        // 把args的参数与fn的参数合并起来，传入fn
+        // 由于apply接受数组作为列表，因此可以传入任意多的参数
+      return fn.apply(this, args.concat(slice.call(arguments, 0)));
+    };
+  }
+// Add all arguments passed in by iterating over the `arguments` object.
+  function addAllTheThings() {
+    var sum = 0;
+    for (var i = 0; i < arguments.length; i++) {
+      sum += arguments[i];
+    }
+    return sum;
+  }
+  // More specific functions.
+  var addOne = partial(addAllTheThings, 1);
+  addOne()                          // 1
+  addOne(2);                        // 3
+  addOne(2, 3);                     // 6
+  addOne(4, 9, 16, 25);
 
