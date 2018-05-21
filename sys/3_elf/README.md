@@ -147,4 +147,24 @@ Disassembly of section .text:
   52:	c9                   	leaveq
   53:	c3                   	retq
 ```
+## 数据段和只读数据段
+.data数据段，存放全局静态变量和局部静态变量
+.rodata存放只读数据，一般是只读变量(const)和字符串常量。
+```
+Contents of section .data:
+ 0000 50000000 55000000                    P...U...
+Contents of section .rodata:
+ 0000 25640a00                             %d..
+```
+
+## ELF文件结构描述
+ELF文件结构|
+---|
+ELF Header |
+.text|
+.data|
+.bss|
+other sections|
+section header table|
+String tables Symbol tables|
 
