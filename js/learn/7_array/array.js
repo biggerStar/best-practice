@@ -43,20 +43,20 @@ pop()
 unshift()
 
 //遍历
-for + length: 以长度索引遍历数组
+// for + length: 以长度索引遍历数组
 for(var i = 0; i < array.length; i++){}
 
-for/in: 每次循环得到可枚举的属性名,包括继承的属性名，所以在数组上不应该使用for/in循环，除非使用过滤
+//for in: 每次循环得到可枚举的属性名,包括继承的属性名，所以在数组上不应该使用for/in循环，除非使用过滤
 for(var index in array){
     if (!a.hasOwnProperty(index))
         continue;
 }
 
-forEach();按照索引的顺序按个传递给定于的一个函数，函数式风格 var data = [1,2,3,4,5]
+//forEach();按照索引的顺序按个传递给定于的一个函数，函数式风格 var data = [1,2,3,4,5]
 data.forEach(function(x){console.log(x)});//1,2,3,4,5
 
 //join
-join是spit()的逆向操作，把数组按照固定字符链接起来
+//join是spit()的逆向操作，把数组按照固定字符链接起来
 var a = [1,2,3]
 a.join()// 1,2,3
 a.join(" ") // 1 2 3
@@ -75,7 +75,7 @@ var a = [1,2,3]
 a.concat(4,5) // [1,2,3,4,5]
 
 //slice()
-截断，包前不包后；-1指定最后一个元素，-3指定倒数第三个元素
+// 截断，包前不包后；-1指定最后一个元素，-3指定倒数第三个元素
 var a = [1,2,3,4,5]
 a.slice(0,3)// => 1,2,3
 a.slice(3)//=> 4,5
@@ -84,7 +84,7 @@ a.slice(-3,-2)//=>3
 
 //toString() toLocaleString()
 //如果是toString()，会直接返回标准的格式；
-如果是toLocaleString()，先判断是否指定语言环境（locale），指定的话则返回当前语言环境下的格式设置（options）的格式化字符串；没有指定语言环境（locale），则返回一个使用默认语言环境和格式设置（options）的格式化字符串
+//如果是toLocaleString()，先判断是否指定语言环境（locale），指定的话则返回当前语言环境下的格式设置（options）的格式化字符串；没有指定语言环境（locale），则返回一个使用默认语言环境和格式设置（options）的格式化字符串
 
 /*ECMAScript 5中的数组方法
  */
@@ -146,7 +146,7 @@ Array.isArray([]) //true
 Array.isArray({}) // false
 
 //类数组对象
-var a = {"0":"a","1":"b","2":"c",length;0}
+var a = {"0":"a","1":"b","2":"c",length:0}
 a.join()//erro,a是对象，没有继承Array方法
 Array.prototype.join.call(a)//'a,b,c'
 Array.prototype.map.call(a,function(x){return x.toUpperCase();});//["A","B","C"]

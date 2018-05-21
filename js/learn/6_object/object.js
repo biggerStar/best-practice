@@ -17,7 +17,7 @@ var p = {
     
     // r是可读写的存取器属性，它有getter和setter
     // 函数体结束 的时候要加上逗号
-    get r() { return Math.sqrt(this.x * this.x + this.y * this.y},
+    get r() { return Math.sqrt(this.x * this.x + this.y * this.y)},
     set r(newvalue){
         var oldvalue = Math.sqrt(this.x * this.x + this.y * this.y);
         var ratio = newvalue/oldvalue;
@@ -39,14 +39,15 @@ Object.defineProperty()
 /*
  * 对象的三个属性：原型，类， 可扩展性
  */
-//原型
+/*原型
 1、通过直接量创建的对象，具有同一个原型对象,通过Object.propotype获得对原型对象的引用
 2、通过new 和构造函数创建的对象，其原型对象就是构造函数的prototype属性值。new Object()创建的对象的原型和通过字面量创建的对象的原型一样；new Data()创建对象的原型是Data.prototype
 3.普通对象都有原型，Object.prototype没有原型。
 4、原型的作用，继承属性
 5、所有构造函数
+*/
 
-原型链：
+//原型链：
 var o = {a: 1};
 
 // o 这个对象继承了Object.prototype上面的所有属性
@@ -73,7 +74,7 @@ function f(){
 // 原型链如下:
 // f ---> Function.prototype ---> Object.prototype ---> null
 
-使用构造器创建继承对象
+//使用构造器创建继承对象
 function Graph() {
   this.vertices = [];
   this.edges = [];
@@ -90,7 +91,7 @@ var g = new Graph();
 // 在g被实例化时,g.[[Prototype]]指向了Graph.prototype.
 
 
-使用Object.create()创建继承对象
+//使用Object.create()创建继承对象
 var a = {a: 1};
 // a ---> Object.prototype ---> null
 
@@ -105,18 +106,18 @@ var d = Object.create(null);
 // d ---> null
 console.log(d.hasOwnProperty); // undefined, 因为d没有继承Object.prototype
 
-属性检测：
+//属性检测：
 var o = {a:1}
 o.hasOwnProperty("x") // x是不是o的自有属性
 o.proptertyIsEnumerable("x") // x是不是o的可枚举属性
 
-获取对象的原型：__proto__, 指向构造函数的prototype
+//获取对象的原型：__proto__, 指向构造函数的prototype
 var one = {x: 1};
 one.__proto__ === Object.prototype //true
 var date = new Date()
 date.__proto__ === Date.prototype //true
 
-isProtytypeOf()方法判断是否是对象的原型
+//isProtytypeOf()方法判断是否是对象的原型
 var p = {x : 1}
 var o = Object.create(p)
 p.isPrototypeOf(o) //true
